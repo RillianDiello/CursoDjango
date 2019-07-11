@@ -1,19 +1,30 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from perfis.models import Perfil
+from django.shortcuts import redirect
 # from django.http import HttpResponse
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    return render(request,'index.html', {'perfis': Perfil.objects.all()})
 
 def exibir(request,perfil_id):
-    perfil = Perfil()
-
-    if perfil_id == '1':
-        perfil = Perfil('Rillian Diello', 'rillian@email.com', '67999999', 'aluraCurso')  
-    if perfil_id == '1':
-        perfil = Perfil('Lucas Pires', 'lucas@email.com', '17955555', 'aluraCurso')  
+    perfil = Perfil.objects.get(id=perfil_id)
     
     return render(request,'perfil.html',{"perfil": perfil})
 
+def convidar(request, perfil_id):
+    # pass
+#  pass: indicando para o Python que aquela funcao nada faz
+    perfil_a_convidar = Perfil.objects.get(id=perfil_id)
+    perfil_logado = get_perfil_logado(request)
+    perfil_logado.convidar(perfil_a_convidar)
+    return redirect('index')
+
+
+
+# Temos que passar o request como parametro, pois caso contrario o Django rejeitaria
+# Ele espera que todas as funcoes do connectedin/perfis/view tenham o parametro, mesmo sem utiliza-lo
+def get_perfil_logado(request):
+    return Perfil.objects.get(id=1)
