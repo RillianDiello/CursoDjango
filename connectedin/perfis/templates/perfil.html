@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil - ConnectedIn</title>
-<head>
-{% comment %} variavel de template = {{nome da variavel.atributo}} {% endcomment %}
-<body>
-    <h1> Detalhes Perfil<h1> 
-    <h3>Nome: {{perfil.name}}<h3>
-    <a href="{% url 'convidar' perfil.id %}">Convidar</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2 style="margin-top: 0">{{perfil.name}}</h2>        
+        <address>
+            <strong>{{perfil.company}}</strong><br>
+            <abbr title="Telefone">Fone: </abbr> {{perfil.fone}}<br>
+            <a href="mailto:{{perfil.email}}">{{perfil.email}}</a><br>
+        </address>
+        <a href="{% url 'convidar' perfil.id%}">Convidar</a>
+    </div>
+</div>
+{% endblock %}

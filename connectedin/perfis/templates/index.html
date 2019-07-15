@@ -1,31 +1,27 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Wellcome to the Django - ConnectedIn</title>
-<head>
-<body>
-    <h1> Bem vindo Teste de Django<h1>
-    <h2> Python 2.7.15rc1<h2>
-    <h2> Django 1.11.20 <h2>
+{% extends 'base.html' %}
+{% comment %} Importanto um template nosso {% endcomment %}
+{% block body %}
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        <strong>Todos os perfils</strong>
+        </div>
+        {% comment %} Tag de Template {% endcomment %}
+        {% if perfis%}
+            {% for perfil in perfis %}
+                
+                <a href="{% url 'exibir' perfil.id %}">
+                Nome: {{perfil.name|upper}}/ Email: {{perfil.email}}
+                <p>Telefone: {{ perfil.fone|default:"Telefone não informado" }} </p>
+                </li>
+                
+                {% endfor %}
+        {% else %}
+            <p>Nenhum perfil Localizado</p>
 
-    <ul>
-    {% comment %} Tag de Template {% endcomment %}
-    {% if perfis%}
-        {% for perfil in perfis %}
-            <li>ID: {{perfil.id}}</li>
-            <li>
-            <a href="{% url 'exibir' perfil.id %}">
-            Nome: {{perfil.name|upper}}/ Email: {{perfil.email}}
-            <p>Telefone: {{ perfil.fone|default:"Telefone não informado" }} </p>
-            </li>
-            
-            {% endfor %}
-    {% else %}
-        <p>Nenhum perfil Localizado</p>
-
-    {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
    
-    </ul>
-</body>
-</html>
+
