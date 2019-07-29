@@ -27,4 +27,23 @@ Quando criamos o projeto connectedin no Django não significa que já temos uma 
 
 python manage.py startapp perfis
 
+## Registrando a aplicação
+Sempre que criarmos uma nova aplicação dentro do nosso projeto Django devemos registra-la de modo que seja conhecida pelo Django e seus manipuladores. Dentro da pasta raiz do nosso projeto existe um arquivo chamado settings.py, e uma variavel chamda INSTALLED_APPS. Essa é uma variavel de configuração, que terá as aplicações existentes do nosso projeto. 
+Nela devemos inserir o nome do nosso novo modulo:
+->connectedin/connectedin/settings.py
+
+...código anterior omitido...
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'perfis'
+)
+
+...código posterior omitido...
+
 
