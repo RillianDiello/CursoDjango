@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 import perfis.urls
+import usuarios.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^',include(perfis.urls))
+    url(r'^',include(perfis.urls)),
+    url(r'^',include(usuarios.urls))
 ]
