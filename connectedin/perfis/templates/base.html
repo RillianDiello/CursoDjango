@@ -1,32 +1,26 @@
 {% load staticfiles %}
-{% comment %} Importanto os arquivos staticos {% endcomment %}
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width">
- <title>Connectedin</title>
-    <link rel="stylesheet" href="{% static 'styles/bootstrap.css'%}">
-    <link rel="stylesheet" href="{% static 'styles/main.css'%}">
-    {% comment %} O Django resolve facilmente este problema atraves da pasta static. 
-    Tudo que estiver dentro dela sera acessivel pelo navegador do usuario diretamente {% endcomment %}
-    {% comment %} utilizamos a tag {% static "nome_do_arquivo" %} 
-    para carregarmos os arquivos que estao dentro de {% endcomment %}
- </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="{% url 'index'%}">{{perfil_logado.name}}</a></li>
-                <li><a href="/logout/">Logout</a></li>
-            </ul>
-            <h3 class="text-muted"> ConnectedIn</h3>
-        </div>
-    
-        <div class="row content">
-            {% block body %}
-            {% endblock %}
-        </div>
-    </div>
- </body>
- </html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<link href="{% static "styles/bootstrap.css" %}" rel="stylesheet">
+		<link href="{% static "styles/main.css" %}" rel="stylesheet">
+		<title>ConnectedIn</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<ul class="nav nav-pills pull-right">
+					<li class=""><a href="{% url 'index' %}">{{perfil_logado.nome}}</a></li>
+					<li class=""><a href="/logout/">Logout</a></li>
+				</ul>
+				<h3 class="text-muted">ConnectedIn</h3>
+			</div>
+			<div class="row content">
+				{% block body %}
+				{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>

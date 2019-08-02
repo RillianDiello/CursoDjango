@@ -3,7 +3,6 @@ from django.contrib import admin
 from usuarios import views
 from views import RegistrarUsuarioView
 
-
-urlpatterns = [    
-    url(r'^registrar/$', RegistrarUsuarioView.as_view(), name="registrar")
+urlpatterns = [  
+	url(r'^registrar/$', RegistrarUsuarioView.as_view(), name="registrar")
 ]

@@ -2,39 +2,28 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class Perfil(models.Model):
 
-    name = models.CharField(max_length = 255, null = False)
-    email = models.CharField(max_length = 255, null = False)
-    fone = models.CharField(max_length = 15, null = False)
-    company = models.CharField(max_length = 255, null = False)
-    # Um relacionamento de muitos para muitos com relacionamento com ele mesmo por isso o self
-    contatos = models.ManyToManyField('self')
+	nome = models.CharField(max_length=255, null=False) 
+	telefone = models.CharField(max_length=15, null=False)
+	nome_empresa = models.CharField(max_length=255, null=False)
+	contatos = models.ManyToManyField('self')
+	usuario = models.OneToOneField(User, related_name="perfil")
 
-    def convidar(self, perfil_convidado):
-        convite = Convite(solicitante=self, convidado = perfil_convidado)
-        convite.save()
+	@property
+	def email(self):
+		return self.usuario.email
 
-    # def __init__(self,name='',email='',fone='',company=''):
-    #     self.name = name
-    #     self.email = email
-    #     self.fone = fone
-    #     self.company = company
+	def convidar(self, perfil_convidado):
+		Convite(solicitante=self, convidado=perfil_convidado).save()
 
-# Create your models here.
-
-
-# Aki temos uma classe que possui o um relacionamento com a classe Perfil 
-# Essa relacao é dada pela presenca da ForeignKey da class Perfil
-# Essa relacao é n x n
-# Alem disso é passado o atributo related_name, que sera criado automaticamente  
-# na classe Perfil com os nomes indicados
 class Convite(models.Model):
-    solicitante = models.ForeignKey(Perfil, related_name = 'convites_feitos')
-    convidado = models.ForeignKey(Perfil, related_name = 'convites_recebidos')
 
-    def aceitar(self):
-        self.convidado.contatos.add(self.solicitante) # está adicionando na lista do perfil convidado
-        self.solicitante.contatos.add(self.convidado)
-        self.delete()
+	solicitante = models.ForeignKey(Perfil, related_name='convites_feitos')
+	convidado = models.ForeignKey(Perfil, related_name='convites_recebidos')
+
+	def aceitar(self):
+		self.convidado.contatos.add(self.solicitante)
+		self.delete()

@@ -1,77 +1,68 @@
-{% extends 'base.html' %}
-{% comment %} Importanto um template nosso {% endcomment %}
+{% extends "base.html" %}
+
 {% block body %}
 <div class="col-lg-12">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-        <strong>Todos os perfils</strong>
-        </div>
-        {% comment %} Tag de Template {% endcomment %}
-        {% if perfis%}
-            {% for perfil in perfis %}
-                
-                <a href="{% url 'exibir' perfil.id %}">
-                Nome: {{perfil.name|upper}}/ Email: {{perfil.email}}
-                <p>Telefone: {{ perfil.fone|default:"Telefone não informado" }} </p>
-                </li>
-                
-                {% endfor %}
-        {% else %}
-            <p>Nenhum perfil Localizado</p>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Todos os Perfis</strong>
+		</div>
 
-        {% endif %}
-    </div>
-    <div class="panel panel-default">
-    {% comment %} quando usamos a clausula with não pode haver espaço {% endcomment %}
-         {% with  total_de_convites=perfil_logado.convites_recebidos.count %}
-            {% if total_de_convites %}
-                <div class="panel-heading">
-                    <strong> Você tem {{total_de_convites}} 
-                    convite{{total_de_convites |pluralize}} 
-                    aguardado aprovação</strong>
-                </div>
-                <ul class="list-group">
-                    {% for convite in perfil_logado.convites_recebidos.all%}
-                    <li class="list-group-item">
-                        {{convite.solicitante.name}}
-                        <a href="{% url 'aceitar' convite.id%}" class="pull-right">Aceitar</a>
-                    </li>
-                    {% endfor%}
-                </ul>
-            {% else %}
-            <div class="panel-body">
-                <p> Nenhum convite recebido</p>
-            </div>
-            {% endif%}
-        {% endwith %}
-    </div>
+		{% if perfis %}
+			<ul>
+				{% for perfil in perfis %}
+					<li>
+						<a href="{% url 'exibir' perfil.id %}">{{ perfil.nome }}</a> / {{ perfil.email }}
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Nenhum Perfil encontrado</p>
+		{% endif %}
+	</div>
 
-    <div class="panel panel-default">
-    {% comment %} quando usamos a clausula with não pode haver espaço {% endcomment %}
-         {% with  total_de_contatos=perfil_logado.contatos.count %}
-            {% if total_de_contatos %}
-                <div class="panel-heading">
-                    <strong> Você tem {{total_de_contatos}} 
-                    contato{{total_de_contatos |pluralize}} 
-                    </strong>
-                </div>
-                <ul class="list-group">
-                    {% for contato in perfil_logado.contatos.all%}
-                    <li class="list-group-item">
-                    <a href="{% url 'exibir' contato.id %}">
-                        {{contato.solicitante.name}}</a>
-                      
-                    </li>
-                    {% endfor%}
-                </ul>
-            {% else %}
-            <div class="panel-body">
-                <p> Você não possui contatos no momento</p>
-            </div>
-            {% endif%}
-        {% endwith %}
-    </div>
+	<div class="panel panel-default">
+		{% with total_de_convites=perfil_logado.convites_recebidos.count %}
+			{% if total_de_convites %}
+				<div class="panel-heading">
+					<strong>
+						Você tem {{ total_de_convites }} 
+							convite{{ total_de_convites|pluralize }} aguardando aprovação
+					</strong>
+				</div>
+				<ul class="list-group">
+					{% for convite in perfil_logado.convites_recebidos.all %}
+						<li class="list-group-item">
+							{{ convite.solicitante.nome }} 
+							<a href="{% url 'aceitar' convite.id %}" class="pull-right">aceitar</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<div class="panel-body">
+					<p>Nenhum convite recebido :(</p>
+				</div>
+			{% endif %}
+		{% endwith %}
+	</div>
+
+	<div class="panel panel-default">
+		{% with total_de_contatos=perfil_logado.contatos.count %}
+			{% if total_de_contatos %}
+				<div class="panel-heading">
+					<strong>Você tem {{total_de_contatos}} contato{{ total_de_contatos|pluralize }}</strong>
+				</div>
+				<ul class="list-group">
+					{% for contato in perfil_logado.contatos.all %}
+						<a href="{% url 'exibir' contato.id %}" class="list-group-item">{{ contato.nome }} // {{ contato.email }}</a>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<div class="panel-body">
+					<p>Você não possui contatos no momento :(</p>
+				</div>
+			{% endif %}
+		{% endwith %}
+	</div>
+
 </div>
 {% endblock %}
-   
-
